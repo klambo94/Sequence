@@ -1,8 +1,6 @@
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 /**
  * Tests for Sequence.

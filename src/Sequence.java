@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -25,7 +28,7 @@ public class Sequence {
     /**
      * Integer sequence array holding intial values of the sequence
      */
-    private Integer[] sequence;
+    private List<Integer> sequence;
 
     /**
      * Holds the current position in the sequence.
@@ -38,11 +41,11 @@ public class Sequence {
     public Sequence() {
         Random random = new Random();
         this.depth = random.nextInt(5);
-        this.sequence = new Integer[depth];
+        this.sequence = new ArrayList<>();
         this.index = 0;
 
         for(int i = 0; i < depth; i++) {
-            this.sequence[i] = random.nextInt();
+            this.sequence.add(random.nextInt());
         }
     }
 
@@ -52,7 +55,23 @@ public class Sequence {
      * @param depth the number of historical values used in calculation
      */
     public Sequence(Integer[] init, int depth) {
-        this.sequence = init;
+        this.sequence = new ArrayList<>();
+        if(init == null) {
+            System.out.println("Init is null, setting to an empty array.");
+            init = new Integer[]{};
+        }
+
+        List<Integer> initList = Arrays.asList(init);
+        if(initList.size() > 0) {
+            this.sequence.addAll(initList);
+        }
+
+        if(depth < 0) {
+            System.out.println("Depth is a negative number," +
+                    " cannot compute the next number in the sequence with negative numbers.");
+            System.exit(-1);
+        }
+
         this.depth = depth;
         this.index = 0;
     }
@@ -64,41 +83,48 @@ public class Sequence {
     public Integer next() {
         int nextInt = 0;
 
-        if(this.sequence.length == 0) {
+        if(this.sequence.size() == 0) {
             nextInt = 0;
-
-        } else if(this.sequence.length <= index) { //Off the sequence array
+            addNewInteger(nextInt);
+        } else if(this.sequence.size() <= index) { //Off the sequence array
             if(depth == 0) {
                 nextInt = 0;
             } else {
-                for(int i = this.sequence.length - depth; i < this.sequence.length; i++) {
-                    nextInt += this.sequence[i];
-                }
+                nextInt = calculateNext();
             }
-        } else if(this.sequence.length > index) {
-            nextInt = sequence[index];
+            addNewInteger(nextInt);
+        } else if(this.sequence.size() > index) {
+            if(depth > index) {
+                nextInt = this.sequence.get(index);
+            } else if(depth == index) {
+                if(this.sequence.get(index) != null) {
+                    nextInt = this.sequence.get(index);
+                } else {
+                    nextInt = calculateNext();
+                    addNewInteger(nextInt);
+                }
+            } else {
+                nextInt = this.sequence.get(index);
+            }
 
         } else {
             nextInt = -1;
         }
 
         index++;
-        addNewInteger(nextInt);
+        System.out.println("Sequence: " + this.sequence.toString());
         return nextInt;
     }
 
-
-    private void addNewInteger(int newInt) {
-        Integer[] newArray = newArray();
-        newArray[index] = newInt;
-        this.sequence = newArray;
+    private void addNewInteger(int nextInt) {
+        this.sequence.add(nextInt);
     }
-    private Integer[] newArray() {
-        Integer[] newArray = new Integer[this.sequence.length + 1];
 
-        for(int i = 0; i < this.sequence.length && i < newArray.length; i++) {
-            newArray[i] = this.sequence[i];
+    private int calculateNext() {
+        int nextInt = 0;
+        for(int i = this.sequence.size() - depth; i < this.sequence.size(); i++) {
+            nextInt += this.sequence.get(i);
         }
-        return newArray;
+        return nextInt;
     }
 }
