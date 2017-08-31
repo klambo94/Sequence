@@ -5,18 +5,19 @@ import java.util.Random;
 
 /**
  * Integer sequence generators. A sequence is defined by its initial values, and a depth. The initial values represent the first values returned by the sequence. The depth is how many previous items are added together to calculate the next item in the sequence, after all initial values have been exhausted.
- * Examples:
  *
- * Sequence({4, 9, 12}, 0) produces [4, 9, 12, 0, 0, 0, 0, ...]
- * Sequence({1}, 1) produces [1, 1, 1, 1, 1, 1, ...]
- * Sequence({3, 8}, 1) produces [3, 8, 8, 8, 8, 8, 8, ...]
- * Sequence({2, 4}, 2) produces [2, 4, 6, 10, 16, 26, 42, 68, ...]
- * Sequence({2, 4, 6, 8}, 3) produces [2, 4, 6, 8, 18, 32, 58, 108, ...]
- * The behavior of sequences for which the depth is greater than number of the initial values is unspecified.
+ * Examples:<br>
  *
- * @author api Dr.Jody
- * @author implementation Kendra Lamb
- * @version 2.0.1
+ * Sequence({4, 9, 12}, 0) produces [4, 9, 12, 0, 0, 0, 0, ...]<br>
+ * Sequence({1}, 1) produces [1, 1, 1, 1, 1, 1, ...]<br>
+ * Sequence({3, 8}, 1) produces [3, 8, 8, 8, 8, 8, 8, ...]<br>
+ * Sequence({2, 4}, 2) produces [2, 4, 6, 10, 16, 26, 42, 68, ...]<br>
+ * Sequence({2, 4, 6, 8}, 3) produces [2, 4, 6, 8, 18, 32, 58, 108, ...]<br>
+ * The behavior of sequences for which the depth is greater than number of the initial values is unspecified.<br>
+ *
+ * @author API Dr.Jody (CS4250 (Fall 2017))
+ * @author Implementation Kendra Lamb
+ * @version 2.0.1,
  */
 public class Sequence {
 
@@ -112,7 +113,6 @@ public class Sequence {
         }
 
         index++;
-        System.out.println("Sequence: " + this.sequence.toString());
         return nextInt;
     }
 

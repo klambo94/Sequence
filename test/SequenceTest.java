@@ -2,6 +2,10 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Tests for Sequence.
  * Example tests for constructor
@@ -96,5 +100,18 @@ public class SequenceTest {
         assertThat(sequence3.next(), is(75));
         assertThat(sequence3.next(), is(150));
         assertThat(sequence3.next(), is(261));
+    }
+
+    /*
+    * Test written by Kendra Lamb, this is testing that the
+    * program will still run with a null Integer[].
+    */
+    @Test
+    public void testNullSequence() {
+        Sequence sequence = new Sequence(null, 0);
+        for (int i = 0; i < 100; i++) {
+            assertThat(sequence.next(), is(0));
+        }
+
     }
 }
